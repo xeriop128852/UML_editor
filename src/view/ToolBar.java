@@ -22,55 +22,53 @@ import mode.selectMode;
 public class ToolBar extends JToolBar{
 
 	private Canvas canvas;
-	JButton button = null;
+	Button button = null;
 	Mode mode ;
 	
 	public ToolBar() {
 		canvas = Canvas.getInstance();
 
-		String button[] = {"Select", "AssociationLine", "GeneralizationLine", "CompositionLine", "Class", "UseCase"};
+		String buttonName[] = {"Select", "AssociationLine", "GeneralizationLine", "CompositionLine", "Class", "UseCase"};
 		Mode mode[] = {new selectMode(), new createLineMode("association"), new createLineMode("generalization"),  new createLineMode("composition"),
 						new createObjMode("class"), new createObjMode("usecase")};
 		this.setFloatable( false );
-		int btn_num = button.length;
+		int btn_num = buttonName.length;
 		this.setLayout(new GridLayout(btn_num, 1));
 		
 		for(int i = 0; i < btn_num; i++) {
-			addButton(button[i], mode[i]);
+			Button button = new Button(buttonName[i], mode[i]);
+			add(button);
 		}
 		
-		
 	}
 
-	protected void addButton(String name, Mode mode) {
-		String imageURL = "img/" + name + ".png";
+	private class Button extends JButton {
+		protected Mode mode;
 		
-		JButton button = new JButton();
-		button.setIcon(new ImageIcon(imageURL));
-		button.setToolTipText(name);
-		button.setFocusPainted(false);
-		button.setBackground(Color.LIGHT_GRAY);
-		button.setBorderPainted(false);
-		this.mode = mode;
-		button.addActionListener(new Listener());
-		
-		if (imageURL != null) { button.setIcon(new ImageIcon(imageURL));
-		} else { System.err.println("Resource not found: " + imageURL); }
-		
-		add(button);
-	}
+		public Button(String name, Mode mode) {
+			String imageURL = "img/" + name + ".png";
 
-	
-	class Listener implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			if(button != null)
-				button.setBackground(Color.LIGHT_GRAY);
-			button = (JButton) e.getSource();
-			button.setBackground(Color.black);
-			canvas.setCurrentMode(mode);
-			canvas.resetCurrentMode();
-			canvas.reset();
-			canvas.repaint();
+			setIcon(new ImageIcon(imageURL));
+			setToolTipText(name);
+			setFocusPainted(false);
+			setBackground(Color.LIGHT_GRAY);
+			setBorderPainted(false);
+			this.mode = mode;
+			addActionListener(new Listener());
+			
+		}
+		
+		class Listener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if(button != null)
+					button.setBackground(Color.LIGHT_GRAY);
+				button = (Button) e.getSource();
+				button.setBackground(Color.black);
+				canvas.setCurrentMode(mode);
+				canvas.resetCurrentMode();
+				canvas.reset();
+				canvas.repaint();
+			}
 		}
 	}
 }

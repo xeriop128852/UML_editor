@@ -15,11 +15,16 @@ public abstract class Shape {
 		return location;
 	}
 	
+	public void move(int offsetX, int offsetY){}
+	
 	public boolean IsSelected() {
 		return isSelected;
 	}
 	public boolean IsGroup() {
 		return isGroup;
+	}
+	public boolean IsInside(Point p) {
+		return false;
 	}
 	
 	public void setSelected(boolean b) {

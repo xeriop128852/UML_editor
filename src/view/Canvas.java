@@ -73,7 +73,7 @@ public class Canvas extends JPanel {
 	
 	
 	public void changeObjName(String name) {
-		if(selectedObj instanceof BasicObj) {
+		if((selectedObj instanceof BasicObj) && (selectedObj!=null)) {
 			BasicObj shape = (BasicObj)selectedObj;
 			shape.changeName(name);
 			repaint();
@@ -85,8 +85,13 @@ public class Canvas extends JPanel {
 			//selectedObj.resetSelectedShape();   //reset group
 			selectedObj = null;
 		}
-		//SelectedArea.setBounds(0, 0, 0, 0); ///Group
+		for (int i = shapes.size() - 1; i >= 0; i--) {
+			shapes.get(i).setSelected(false);
+		}
+//		SelectedArea.setBounds(0, 0, 0, 0); ///Group
 	}
+	
+	
 	
 	public void paint(Graphics g) {
 		Dimension dim = getSize();
@@ -111,10 +116,10 @@ public class Canvas extends JPanel {
 			if (shape.IsSelected() && (shape instanceof BasicObj)) {
 				BasicObj basic = (BasicObj) shape;
 				basic.drawPorts(g);
-			} 
-//			else if (selectedObj == shape) {
-//				shape.drawPorts(g);
-//			}
+			}else if (selectedObj == shape) {
+				BasicObj basic = (BasicObj) shape;
+				basic.drawPorts(g);
+			}
 		}
 
 	}

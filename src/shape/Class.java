@@ -16,6 +16,7 @@ public class Class extends BasicObj {
 
 	@Override
 	public void draw(Graphics g) {
+		g.setColor(Color.BLACK);
 		g.drawRect(location.x, location.y, width, height);
 		int portion = height / 3;
 		g.drawLine(location.x, location.y + portion, location.x + width, location.y + portion);
@@ -25,7 +26,8 @@ public class Class extends BasicObj {
 		g.setFont(font);	
 		g.drawString(objectName, location.x + (width - stringWidth)/2 , location.y + portion/2 + 5);
 		
-		drawPorts(g);
+		if(IsSelected())
+			drawPorts(g);
 	}
 
 }

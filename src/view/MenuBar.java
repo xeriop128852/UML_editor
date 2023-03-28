@@ -58,7 +58,7 @@ public class MenuBar extends JMenuBar {
 		
 		class ChangeNameListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				String inputValue = JOptionPane.showInputDialog(new JFrame(), "Please input a value", "Change object name", 
+				String inputValue = JOptionPane.showInputDialog(new JFrame(), "Please input object name", "Change Object Name", 
 						JOptionPane.OK_CANCEL_OPTION); 
 				canvas.changeObjName(inputValue);
 			}

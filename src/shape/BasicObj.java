@@ -42,4 +42,23 @@ public abstract class BasicObj extends Shape {
 			g.fillRect(ports[i].x - 8, ports[i].y - 8 , 15, 15);
 		}
 	}
+	
+	public boolean IsInside(Point p){
+		return ((p.getX() > location.x) && 
+				(p.getX() < location.x + width) &&
+				(p.getY() > location.y) &&
+				(p.getY() < location.y + height) );
+	}
+	
+	public void move(int offsetX, int offsetY){
+		location.x += offsetX;
+		location.y += offsetY;
+		resetPorts(offsetX, offsetY);
+	}
+	
+	public void resetPorts(int offsetX, int offsetY){
+		for(int i = 0; i < portNum; i++) {
+			ports[i].setLocation(ports[i].x + offsetX, ports[i].y + offsetY);
+		}
+	}
 }
