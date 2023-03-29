@@ -25,7 +25,7 @@ public class Canvas extends JPanel {
 	private Shape selectedObj = null;
 	public Line line = null;
 	
-	public Rectangle SelectedArea = new Rectangle();
+	public Rectangle SelectedArea = new Rectangle(0,0,0,0);
 	
 	public Canvas() {
 	}
@@ -109,13 +109,13 @@ public class Canvas extends JPanel {
 	public void reset() {
 		this.line = null;
 		if(selectedObj != null){
-			selectedObj.resetSelectedShape();   //reset group
+//			selectedObj.resetShapesInGroup();   //reset group
 			selectedObj = null;
 		}
 		for (int i = shapes.size() - 1; i >= 0; i--) {
 			shapes.get(i).setSelected(false);
 		}
-		SelectedArea.setBounds(0, 0, 0, 0); ///Group
+		SelectedArea.setBounds(0, 0, 0, 0); 
 	}
 
 
@@ -140,11 +140,6 @@ public class Canvas extends JPanel {
 			Shape shape = shapes.get(i);
 			shape.draw(g);
 			
-			// check select
-			if (checkSelectedArea(shape)) {
-				shape.setSelected(true);
-			}
-
 			// draw ports when object is selected
 			if (shape.IsSelected() && (shape instanceof BasicObj)) {
 				BasicObj basic = (BasicObj) shape;
@@ -152,10 +147,16 @@ public class Canvas extends JPanel {
 			}else if(selectedObj != null) {
 				selectedObj.drawPorts(g);
 			}
-			shape.setGroup(false);
+			
+			if (shape.IsSelected() && (shape instanceof Group)) {
+				Group group = (Group) shape;
+				group.draw(g);
+			}
+			
+			//shape.setGroup(false);
 			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
 				shape.drawPorts(g);
-				shape.setGroup(true);
+				shape.setSelected(true);
 			}
 		}
 		

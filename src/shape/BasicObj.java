@@ -73,8 +73,8 @@ public abstract class BasicObj extends Shape {
 	public void move(int offsetX, int offsetY){
 		startP.x += offsetX;
 		startP.y += offsetY;
+		endP = setEndLocation(startP, width, height);
 		resetPorts(offsetX, offsetY);
-		setEndLocation(startP, height, width);
 	}
 	
 	public void resetPorts(int offsetX, int offsetY){

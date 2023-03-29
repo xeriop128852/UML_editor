@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import shape.Line;
 import shape.Shape;
 
 public class selectMode extends Mode {
@@ -57,11 +58,19 @@ public class selectMode extends Mode {
 						canvas.SelectedArea.setBounds(e.getX(), clickPoint.y, Math.abs(offsetX), Math.abs(offsetY));
 					else
 						canvas.SelectedArea.setBounds(e.getX(), e.getY(), Math.abs(offsetX), Math.abs(offsetY));
+				canvas.SelectedArea.setSize(Math.abs(e.getX() - clickPoint.x), Math.abs(e.getY() - clickPoint.y));
 			}
 			
 		}
 		else {
 			canvas.SelectedArea.setSize(Math.abs(e.getX() - clickPoint.x), Math.abs(e.getY() - clickPoint.y));
+		}
+		
+		if(this.canvas.getshapesInGroup().size() == 1){
+			Shape tmp = this.canvas.getshapesInGroup().get(0);
+			if(tmp instanceof Line != true){
+				this.canvas.setSelectedObj(tmp);
+			}
 		}
 		
 		this.canvas.repaint();

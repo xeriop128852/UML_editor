@@ -53,5 +53,18 @@ public abstract class Shape {
 	public void resetSelectedShape() {
 	}
 
+	public void resetShapesInGroup() {
+	}
+
+	public void show(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void resetLocation(int moveX, int moveY) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

@@ -55,7 +55,13 @@ public class MenuBar extends JMenuBar {
 		class GroupObjectListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				List<Shape> shapesInGroup = canvas.getshapesInGroup();
-				canvas.Group(shapesInGroup);
+				if(shapesInGroup.size() < 2){
+					JOptionPane.showMessageDialog(new JFrame(),"Please select two or more object for grouping.","Warning",JOptionPane.WARNING_MESSAGE);
+				}
+				else{
+					canvas.Group(shapesInGroup);
+				}
+				canvas.reset();
 			}
 		}
 		
