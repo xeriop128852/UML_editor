@@ -9,7 +9,6 @@ import java.util.List;
 
 
 public abstract class BasicObj extends Shape {
-	protected Point location;
 	protected int width, height;
 	private int portNum = 4;
 	protected Point[] ports = new Point[4];
@@ -18,25 +17,28 @@ public abstract class BasicObj extends Shape {
 	private List<Line> lines = new ArrayList<Line>();
 	
 	public BasicObj() {
-		location = new Point();
+		startP = new Point();
 		ports = new Point[portNum];
 		for(int i = 0; i < portNum ; i++)
 			ports[i] = new Point();
+		
+		setEndLocation(startP, height, width);
 	}
 
 	public abstract void draw(Graphics g);
-
+	
+	
 	public void changeName(String name){
 		objectName = name;
 	}
 
 	public void generatePorts() {
-		int xmiddle = (location.x + location.x + width)/2;
-		int ymiddle = (location.y + location.y + height)/2;
-		ports[0].setLocation(location.x, ymiddle);
-		ports[1].setLocation(xmiddle, location.y);
-		ports[2].setLocation(xmiddle, location.y + height);
-		ports[3].setLocation(location.x + width, ymiddle);
+		int xmiddle = (startP.x + startP.x + width)/2;
+		int ymiddle = (startP.y + startP.y + height)/2;
+		ports[0].setLocation(startP.x, ymiddle);
+		ports[1].setLocation(xmiddle, startP.y);
+		ports[2].setLocation(xmiddle, startP.y + height);
+		ports[3].setLocation(startP.x + width, ymiddle);
 	}
 	
 	public Point getPort(Point clickPoint) {
@@ -62,15 +64,15 @@ public abstract class BasicObj extends Shape {
 	}
 	
 	public boolean IsInside(Point p){
-		return ((p.getX() > location.x) && 
-				(p.getX() < location.x + width) &&
-				(p.getY() > location.y) &&
-				(p.getY() < location.y + height) );
+		return ((p.getX() > startP.x) && 
+				(p.getX() < startP.x + width) &&
+				(p.getY() > startP.y) &&
+				(p.getY() < startP.y + height) );
 	}
 	
 	public void move(int offsetX, int offsetY){
-		location.x += offsetX;
-		location.y += offsetY;
+		startP.x += offsetX;
+		startP.y += offsetY;
 		resetPorts(offsetX, offsetY);
 	}
 	

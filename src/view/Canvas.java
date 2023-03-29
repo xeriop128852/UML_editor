@@ -1,15 +1,8 @@
 package view;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Currency;
 import java.util.EventListener;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.LayoutManager;
 import java.awt.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -36,6 +29,8 @@ public class Canvas extends JPanel {
 	private List<Shape> shapes = new ArrayList<Shape>();
 	private Shape selectedObj = null;
 	public Line line = null;
+	
+	public Rectangle SelectedArea = new Rectangle();
 	
 	public Canvas() {
 	}
@@ -97,13 +92,21 @@ public class Canvas extends JPanel {
 			//selectedObj.resetSelectedShape();   //reset group
 			selectedObj = null;
 		}
-		for (int i = shapes.size() - 1; i >= 0; i--) {
-			shapes.get(i).setSelected(false);
-		}
-//		SelectedArea.setBounds(0, 0, 0, 0); ///Group
+//		for (int i = shapes.size() - 1; i >= 0; i--) {
+//			shapes.get(i).setSelected(false);
+//		}
+		SelectedArea.setBounds(0, 0, 0, 0); ///Group
 	}
+
 	
-	
+
+	public boolean checkSelectedArea(Shape shape) {
+		/* show ports of selected objects */
+		if (SelectedArea.contains(shape.getStartLocation()) && SelectedArea.contains(shape.getEndLocation())) {
+			return true;
+		}
+		return false;
+	}
 	
 	public void paint(Graphics g) {
 		Dimension dim = getSize();
@@ -118,18 +121,23 @@ public class Canvas extends JPanel {
 			Shape shape = shapes.get(i);
 			shape.draw(g);
 			
-//			/* check group select */
-//			if (checkSelectedArea(shape)) {
-//				shape.setSelected(true);
-//			}
+			// check select
+			if (checkSelectedArea(shape)) {
+				shape.setSelected(true);
+			}
 
-			/* draw ports when object is selected */
+			// draw ports when object is selected
 			if (shape.IsSelected() && (shape instanceof BasicObj)) {
 				BasicObj basic = (BasicObj) shape;
 				basic.drawPorts(g);
 			}else if (selectedObj == shape) {
 				BasicObj basic = (BasicObj) shape;
 				basic.drawPorts(g);
+			}
+			
+			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
+				shape.drawPorts(g);
+				//shape.group_selected = true;
 			}
 		}
 		
@@ -138,6 +146,14 @@ public class Canvas extends JPanel {
 		}
 
 
+		if (!SelectedArea.isEmpty()) {
+			int alpha = 15;
+			g.setColor(new Color(37, 148, 216, alpha));
+			g.fillRect(SelectedArea.x, SelectedArea.y, SelectedArea.width, SelectedArea.height);
+			g.setColor(new Color(37, 148, 216));
+			g.drawRect(SelectedArea.x, SelectedArea.y, SelectedArea.width, SelectedArea.height);
+
+		}
 	}
 	
 }

@@ -38,14 +38,30 @@ public class selectMode extends Mode {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(clickPoint != null){
+			int offsetX = e.getX() - this.clickPoint.x;
+			int offsetY = e.getY() - this.clickPoint.y;
 			if(this.shape != null){
-				int offsetX = e.getX() - (int)this.clickPoint.getX();
-				int offsetY = e.getY() - (int)this.clickPoint.getY();
+				
 				this.clickPoint = e.getPoint();
 				this.shape.move(offsetX, offsetY);	
 			}
+			else{
+				if(offsetX > 0 )
+					if(offsetY > 0)
+						canvas.SelectedArea.setBounds(clickPoint.x, clickPoint.y, Math.abs(offsetX), Math.abs(offsetY));
+					else
+						canvas.SelectedArea.setBounds(clickPoint.x, e.getY(), Math.abs(offsetX), Math.abs(offsetY));
+				else
+					if(offsetY > 0)
+						canvas.SelectedArea.setBounds(e.getX(), clickPoint.y, Math.abs(offsetX), Math.abs(offsetY));
+					else
+						canvas.SelectedArea.setBounds(e.getX(), e.getY(), Math.abs(offsetX), Math.abs(offsetY));
+			}
 			
 			this.canvas.repaint();
+		}
+		else {
+			canvas.SelectedArea.setSize(Math.abs(e.getX() - clickPoint.x), Math.abs(e.getY() - clickPoint.y));
 		}
 
 	}
@@ -54,7 +70,7 @@ public class selectMode extends Mode {
 	public void mouseReleased(MouseEvent e) {
 		this.clickPoint = null;
 		this.shape = null;
-		//this.canvas.resetSelectedArea();
+		this.canvas.reset();
 		this.canvas.repaint();
 		
 		

@@ -4,9 +4,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 
 public class Line extends Shape{
-	protected Point startP = this.location;
-	protected Point endP = null;
-	
 	private Shape startObj = null;
 	private Shape endObj = null;
 	
@@ -14,8 +11,6 @@ public class Line extends Shape{
 		startP = start;
 		endP = end;
 	}
-	
-	
 	
 	@Override
 	public void draw(Graphics g) {
