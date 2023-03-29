@@ -12,13 +12,8 @@ import javax.swing.JPanel;
 import shape.Shape;
 import shape.BasicObj;
 import shape.Line;
-import shape.Class; 
-import shape.UseCase;
-import shape.Shape;
 import mode.*;
-import shape.AssociationLine;
-import shape.GeneralizationLine;
-import shape.CompositionLine;
+import shape.Group;
 
 public class Canvas extends JPanel {
 	private static Canvas instance = null;
@@ -78,6 +73,23 @@ public class Canvas extends JPanel {
 		return this.line;
 	}
 	
+	public List<Shape> getshapesInGroup() {
+		List<Shape> selectshapes = new ArrayList<Shape>();
+		List<Line> selectlines = new ArrayList<Line>();
+		for (int i = 0; i < this.shapes.size(); i++) {
+			Shape shape = this.shapes.get(i);
+			if (shape.IsSelected()){
+				if (shape instanceof Line) {
+					selectlines.add((Line)shape);
+				}
+				else{
+					selectshapes.add(shape);
+				}
+			}
+		}
+		return selectshapes;
+	}
+	
 	public void changeObjName(String name) {
 		if((selectedObj instanceof BasicObj) && (selectedObj!=null)) {
 			BasicObj shape = (BasicObj)selectedObj;
@@ -86,23 +98,30 @@ public class Canvas extends JPanel {
 		}
 	}
 	
+	public void Group(List<Shape> shapeList) {
+		shapes.add(new Group(shapeList));
+		for (int i = 0; i < shapeList.size(); i++) {
+			shapeList.get(i).setGroup(true);
+			this.shapes.remove(shapeList.get(i));
+		}
+	}
+	
 	public void reset() {
 		this.line = null;
 		if(selectedObj != null){
-			//selectedObj.resetSelectedShape();   //reset group
+			selectedObj.resetSelectedShape();   //reset group
 			selectedObj = null;
 		}
-//		for (int i = shapes.size() - 1; i >= 0; i--) {
-//			shapes.get(i).setSelected(false);
-//		}
+		for (int i = shapes.size() - 1; i >= 0; i--) {
+			shapes.get(i).setSelected(false);
+		}
 		SelectedArea.setBounds(0, 0, 0, 0); ///Group
 	}
 
-	
 
 	public boolean checkSelectedArea(Shape shape) {
-		/* show ports of selected objects */
-		if (SelectedArea.contains(shape.getStartLocation()) && SelectedArea.contains(shape.getEndLocation())) {
+		if (SelectedArea.contains(shape.getStartLocation())
+				&& SelectedArea.contains(shape.getEndLocation())) {
 			return true;
 		}
 		return false;
@@ -130,14 +149,13 @@ public class Canvas extends JPanel {
 			if (shape.IsSelected() && (shape instanceof BasicObj)) {
 				BasicObj basic = (BasicObj) shape;
 				basic.drawPorts(g);
-			}else if (selectedObj == shape) {
-				BasicObj basic = (BasicObj) shape;
-				basic.drawPorts(g);
+			}else if(selectedObj != null) {
+				selectedObj.drawPorts(g);
 			}
-			
+			shape.setGroup(false);
 			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
 				shape.drawPorts(g);
-				//shape.group_selected = true;
+				shape.setGroup(true);
 			}
 		}
 		
@@ -155,5 +173,7 @@ public class Canvas extends JPanel {
 
 		}
 	}
+
+	
 	
 }

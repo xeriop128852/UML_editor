@@ -10,7 +10,7 @@ public class UseCase extends BasicObj {
 		this.startP = p;
 		this.height = 90;
 		this.width = 120;
-		this.endP = setEndLocation(startP, height, width);
+		this.endP = setEndLocation(startP, width, height);
 		generatePorts();
 	}
 

@@ -4,11 +4,14 @@ import javax.swing.JMenuBar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
+import shape.Shape;
 
 public class MenuBar extends JMenuBar {
 	private Canvas canvas;
@@ -51,8 +54,8 @@ public class MenuBar extends JMenuBar {
 		
 		class GroupObjectListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
-				//canvas.addGroup();
-				//canvas.GroupShape();
+				List<Shape> shapesInGroup = canvas.getshapesInGroup();
+				canvas.Group(shapesInGroup);
 			}
 		}
 		

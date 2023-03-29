@@ -22,7 +22,7 @@ public abstract class BasicObj extends Shape {
 		for(int i = 0; i < portNum ; i++)
 			ports[i] = new Point();
 		
-		setEndLocation(startP, height, width);
+		setEndLocation(startP, width, height);
 	}
 
 	public abstract void draw(Graphics g);
@@ -74,6 +74,7 @@ public abstract class BasicObj extends Shape {
 		startP.x += offsetX;
 		startP.y += offsetY;
 		resetPorts(offsetX, offsetY);
+		setEndLocation(startP, height, width);
 	}
 	
 	public void resetPorts(int offsetX, int offsetY){

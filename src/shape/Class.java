@@ -10,7 +10,7 @@ public class Class extends BasicObj {
 		this.startP = p;
 		this.height = 120;
 		this.width = 90;
-		this.endP = setEndLocation(startP, height, width);
+		this.endP = setEndLocation(startP, width, height);
 		generatePorts();
 	}
 

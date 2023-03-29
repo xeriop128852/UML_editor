@@ -2,7 +2,6 @@ package shape;
 
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 
 public abstract class Shape {
 	Point startP, endP;
@@ -50,5 +49,9 @@ public abstract class Shape {
 	}
 
 	public void drawPorts(Graphics g) {}
+
+	public void resetSelectedShape() {
+	}
+
 	
 }
