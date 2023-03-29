@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public abstract class BasicObj extends Shape {
@@ -13,6 +15,7 @@ public abstract class BasicObj extends Shape {
 	protected Point[] ports = new Point[4];
 	protected String objectName = "default";
 	protected Font font = new Font(Font.DIALOG, Font.BOLD, 14);
+	private List<Line> lines = new ArrayList<Line>();
 	
 	public BasicObj() {
 		location = new Point();
@@ -75,5 +78,9 @@ public abstract class BasicObj extends Shape {
 		for(int i = 0; i < portNum; i++) {
 			ports[i].setLocation(ports[i].x + offsetX, ports[i].y + offsetY);
 		}
+	}
+	
+	public void addLine(Line line){
+		this.lines.add(line);
 	}
 }

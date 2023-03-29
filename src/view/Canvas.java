@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import shape.Shape;
 import shape.BasicObj;
+import shape.Line;
 import shape.Class; 
 import shape.UseCase;
 import shape.Shape;
@@ -34,6 +35,7 @@ public class Canvas extends JPanel {
 	
 	private List<Shape> shapes = new ArrayList<Shape>();
 	private Shape selectedObj = null;
+	public Line line = null;
 	
 	public Canvas() {
 	}
@@ -73,7 +75,13 @@ public class Canvas extends JPanel {
 		return this.selectedObj;
 	}
 	
-	
+	public void setLine(Line line) {
+		this.line = line;
+	}
+
+	public Line getLine() {
+		return this.line;
+	}
 	
 	public void changeObjName(String name) {
 		if((selectedObj instanceof BasicObj) && (selectedObj!=null)) {
@@ -84,6 +92,7 @@ public class Canvas extends JPanel {
 	}
 	
 	public void reset() {
+		this.line = null;
 		if(selectedObj != null){
 			//selectedObj.resetSelectedShape();   //reset group
 			selectedObj = null;
@@ -123,6 +132,11 @@ public class Canvas extends JPanel {
 				basic.drawPorts(g);
 			}
 		}
+		
+		if (line != null) {
+			this.line.draw(g);
+		}
+
 
 	}
 	

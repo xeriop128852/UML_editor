@@ -14,6 +14,9 @@ public abstract class Shape {
 	public Point getLocation() {
 		return location;
 	}
+	public Point getPort(Point p) {
+		return null;
+	}
 	
 	public void move(int offsetX, int offsetY){}
 	
@@ -32,5 +35,9 @@ public abstract class Shape {
 	}
 	public void setGroup(boolean b) {
 		isGroup = b;
+	}
+
+	// BasicObj
+	public void addLine(Line line) {
 	}
 }
