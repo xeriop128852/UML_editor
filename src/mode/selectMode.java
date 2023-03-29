@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.Canvas;
 import shape.Shape;
 
 public class selectMode extends Mode {
@@ -15,7 +14,6 @@ public class selectMode extends Mode {
 	private Shape shape = null;
 	
 	public selectMode() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -61,6 +59,7 @@ public class selectMode extends Mode {
 		
 		
 	}
+
 
 
 }

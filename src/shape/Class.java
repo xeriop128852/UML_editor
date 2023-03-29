@@ -3,7 +3,6 @@ package shape;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Color;
-import java.awt.Font;
 
 public class Class extends BasicObj {
 	

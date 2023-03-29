@@ -22,6 +22,9 @@ import shape.Class;
 import shape.UseCase;
 import shape.Shape;
 import mode.*;
+import shape.AssociationLine;
+import shape.GeneralizationLine;
+import shape.CompositionLine;
 
 public class Canvas extends JPanel {
 	private static Canvas instance = null;
@@ -101,7 +104,6 @@ public class Canvas extends JPanel {
 		g.setColor(new Color(35, 37, 37));
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(1));
-		
 		
 		for(int i = 0; i < shapes.size(); i++) {
 			Shape shape = shapes.get(i);

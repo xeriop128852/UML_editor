@@ -36,6 +36,21 @@ public abstract class BasicObj extends Shape {
 		ports[3].setLocation(location.x + width, ymiddle);
 	}
 	
+	public Point getPort(Point clickPoint) {
+		double distance = 0;
+		double min = 999;
+		Point point = null;
+		
+		for(int i = 0; i < portNum; i++) {
+			distance = Math.sqrt(Math.pow(clickPoint.x-ports[i].x, 2) + Math.pow(clickPoint.y-ports[i].y, 2));
+			if(min > distance) {
+				min = distance;
+				point = ports[i];
+			}
+		}
+		return point;
+	}
+	
 	public void drawPorts(Graphics g) {
 		g.setColor(Color.LIGHT_GRAY);
 		for(int i = 0; i < portNum ; i++) {
