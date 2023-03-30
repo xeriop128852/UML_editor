@@ -9,6 +9,7 @@ public abstract class Shape {
 	boolean isSelected = false;
 	boolean isGroup = false;
 	protected int width, height;
+	public boolean group_selected;
 	public abstract void draw(Graphics g);;
 	
 	public Point getStartLocation() {

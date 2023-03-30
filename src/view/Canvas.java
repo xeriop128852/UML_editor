@@ -22,8 +22,9 @@ public class Canvas extends JPanel {
 	protected Mode currentMode = null;
 	
 	private List<Shape> shapes = new ArrayList<Shape>();
-	private Shape selectedObj = null;
+	public Shape selectedObj = null;
 	public Line line = null;
+	public Group group;
 	
 	public Rectangle SelectedArea = new Rectangle(0,0,0,0);
 	
@@ -59,6 +60,7 @@ public class Canvas extends JPanel {
 	
 	public void setSelectedObj(Shape shape) {
 		this.selectedObj = shape;
+		selectedObj.setSelected(true);
 	}
 	
 	public Shape getSelectedObj() {
@@ -98,24 +100,51 @@ public class Canvas extends JPanel {
 		}
 	}
 	
+//	public void Group() {
+//		Group group = new Group();
+//		for (int i = 0; i < shapes.size(); i++) {
+//			Shape shape = shapes.get(i);
+//			if (shape.group_selected) {
+//				group.addShapes(shape);
+//				shapes.remove(i);
+//				i--;
+//			}
+//		}
+//		group.setBounds();
+//		shapes.add(group);
+//	}
+	
 	public void Group(List<Shape> shapeList) {
-		shapes.add(new Group(shapeList));
+		group = new Group(shapeList);
+		shapes.add(group);
 		for (int i = 0; i < shapeList.size(); i++) {
 			shapeList.get(i).setGroup(true);
+			//group.addShape(shapeList.get(i));
 			this.shapes.remove(shapeList.get(i));
+			
 		}
+	}
+	
+	public void UnGroup(Shape shape) {
+		List<Shape> shapelist = ((Group) shape).getShapes();
+		for (int i = 0; i < shapelist.size(); i++) {
+			shapelist.get(i).setGroup(false);
+			this.shapes.add(shapelist.get(i));
+		}
+		this.shapes.remove(shape);
+		
 	}
 	
 	public void reset() {
 		this.line = null;
 		if(selectedObj != null){
-//			selectedObj.resetShapesInGroup();   //reset group
+			//selectedObj.resetShapesInGroup();   //reset group
 			selectedObj = null;
 		}
 		for (int i = shapes.size() - 1; i >= 0; i--) {
 			shapes.get(i).setSelected(false);
 		}
-		SelectedArea.setBounds(0, 0, 0, 0); 
+		//SelectedArea.setBounds(0, 0, 0, 0); 
 	}
 
 
@@ -148,16 +177,21 @@ public class Canvas extends JPanel {
 				selectedObj.drawPorts(g);
 			}
 			
-			if (shape.IsSelected() && (shape instanceof Group)) {
-				Group group = (Group) shape;
-				group.draw(g);
-			}
 			
-			//shape.setGroup(false);
+//			
+//			if (shape.IsSelected() && (shape instanceof Group)) {
+//				Group group = (Group) shape;
+//				group.draw(g);
+//			}
+			
+			shape.setGroup(false);
 			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
 				shape.drawPorts(g);
 				shape.setSelected(true);
+				shape.setGroup(true);
 			}
+			
+			
 		}
 		
 		if (line != null) {
@@ -165,6 +199,7 @@ public class Canvas extends JPanel {
 		}
 
 
+		
 		if (!SelectedArea.isEmpty()) {
 			int alpha = 15;
 			g.setColor(new Color(37, 148, 216, alpha));

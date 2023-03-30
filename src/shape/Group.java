@@ -12,9 +12,8 @@ import java.awt.*;
 public class Group extends Shape {
 	Point startP = new Point();
 	Point endP = new Point();
-	private List<Shape> shapes = new ArrayList<Shape>();
-	private Rectangle bounds = new Rectangle();
-	private List<Shape> shapesInGroup = new ArrayList<>();
+	public List<Shape> shapes = new ArrayList<Shape>();
+	public List<Shape> shapesInGroup = new ArrayList<>();
 	
 	public Group(List<Shape> shapeList) {
 		startP.x = shapeList.get(0).startP.x;
@@ -22,9 +21,12 @@ public class Group extends Shape {
 		startP.y = shapeList.get(0).startP.y;
 		endP.y = shapeList.get(0).endP.y;
 		
+		
 		for(int i = 0; i < shapeList.size(); i++) {
 			Shape shape = shapeList.get(i);
-			shapesInGroup.add(shape);
+			shapeList.get(i).setSelected(false);
+			//shapesInGroup.add(shape);
+			addShape(shape);
 			
 			startP.x = Math.min(startP.x, shape.startP.x);
 			startP.y = Math.min(startP.y, shape.startP.y);
@@ -33,16 +35,33 @@ public class Group extends Shape {
 		}
 	}
 
+	public void setSelected(boolean b) {
+		if(b == true) {
+			this.isSelected = true;
+			for(int i = 0; i < shapesInGroup.size(); i++) {
+				Shape shape = shapesInGroup.get(i);
+				shapesInGroup.get(i).setSelected(true);
+			}
+		}
+		else {
+			this.isSelected = false;
+			for(int i = 0; i < shapesInGroup.size(); i++) {
+				Shape shape = shapesInGroup.get(i);
+				shapesInGroup.get(i).setSelected(false);
+			}
+		}
+	}
+	
 	public void addShape(Shape shape) {
-		shapes.add(shape);
+		shapesInGroup.add(shape);
 	}
 	
 	public void removeShape(Shape shape) {
-		this.shapes.remove(shape);
+		this.shapesInGroup.remove(shape);
 	}
 
 	public List<Shape> getShapes() {
-		return shapes;
+		return shapesInGroup;
 	}
 	
 	public void resetShapesInGroup() {
@@ -78,11 +97,19 @@ public class Group extends Shape {
 	public void draw(Graphics g) {
 		for(int i = 0; i< this.shapesInGroup.size(); i++){
 			this.shapesInGroup.get(i).draw(g);
+			if(this.isSelected == true) {
+				shapesInGroup.get(i).drawPorts(g);
+			}
 		}
 		int alpha = 15;
 		g.setColor(new Color(24, 12, 132, alpha));
 		g.fillRect(startP.x, startP.y, endP.x - startP.x, endP.y - startP.y);
 		g.setColor(new Color(24, 12, 132));
 		g.drawRect(startP.x, startP.y, endP.x - startP.x, endP.y - startP.y);
+	}
+	
+	
+	public void show(Graphics g) {
+		
 	}
 }

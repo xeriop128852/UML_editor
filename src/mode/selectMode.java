@@ -9,7 +9,6 @@ import shape.Line;
 import shape.Shape;
 
 public class selectMode extends Mode {
-	//protected Canvas canvas;
 	private Point clickPoint = null;
 	private List<Shape> shapes = new ArrayList<Shape>();;
 	private Shape shape = null;
@@ -20,6 +19,7 @@ public class selectMode extends Mode {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		this.canvas.reset();
+		
 		shape = null;
 		this.clickPoint = e.getPoint();
 		
@@ -32,6 +32,7 @@ public class selectMode extends Mode {
 				canvas.setSelectedObj(shape);
 				break;
 			}
+			
 		}
 		
 		canvas.repaint();
@@ -46,8 +47,9 @@ public class selectMode extends Mode {
 				
 				this.clickPoint = e.getPoint();
 				this.shape.move(offsetX, offsetY);	
+				
 			}
-			else{
+			else if(this.shape == null){
 				if(offsetX > 0 )
 					if(offsetY > 0)
 						canvas.SelectedArea.setBounds(clickPoint.x, clickPoint.y, Math.abs(offsetX), Math.abs(offsetY));
@@ -58,7 +60,7 @@ public class selectMode extends Mode {
 						canvas.SelectedArea.setBounds(e.getX(), clickPoint.y, Math.abs(offsetX), Math.abs(offsetY));
 					else
 						canvas.SelectedArea.setBounds(e.getX(), e.getY(), Math.abs(offsetX), Math.abs(offsetY));
-				canvas.SelectedArea.setSize(Math.abs(e.getX() - clickPoint.x), Math.abs(e.getY() - clickPoint.y));
+				
 			}
 			
 		}
@@ -82,7 +84,6 @@ public class selectMode extends Mode {
 		this.shape = null;
 		this.canvas.SelectedArea.setBounds(0, 0, 0, 0);
 		this.canvas.repaint();
-	
 		
 	}
 

@@ -11,17 +11,19 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
+import shape.Group;
 import shape.Shape;
 
 public class MenuBar extends JMenuBar {
 	private Canvas canvas;
 	private JMenuBar menubar;
+	JMenu menu;
+	JMenuItem mi, mntmUngroup;
 	
 	public MenuBar() {
 		canvas = Canvas.getInstance();
 		
-		JMenu menu;
-		JMenuItem mi;
+		
 		
 		menu = new JMenu("File");
 		add(menu);
@@ -35,10 +37,10 @@ public class MenuBar extends JMenuBar {
 		mi.addActionListener(new GroupObjectListener());
 		
 		
-		mi = new JMenuItem("Ungroup");
-		mi.setEnabled(false);
-		menu.add(mi);
-		mi.addActionListener(new ChangeNameListener());
+		mntmUngroup = new JMenuItem("Ungroup");
+		mntmUngroup.setEnabled(false);
+		menu.add(mntmUngroup);
+		mntmUngroup.addActionListener(new UngroupObjectListener());
 		
 		
 		mi = new JMenuItem("Change object name");
@@ -46,11 +48,7 @@ public class MenuBar extends JMenuBar {
 		mi.addActionListener(new ChangeNameListener());
 	}
 	
-		class UngroupObjectListener implements ActionListener {
-			public void actionPerformed(ActionEvent e) {
-				//canvas.removeGroup();
-			}
-		}
+		
 		
 		class GroupObjectListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
@@ -60,8 +58,23 @@ public class MenuBar extends JMenuBar {
 				}
 				else{
 					canvas.Group(shapesInGroup);
+//					canvas.Group();
+					mntmUngroup.setEnabled(true);
 				}
-				canvas.reset();
+			}
+		}
+		
+		class UngroupObjectListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if(!(canvas.getSelectedObj() instanceof Group)){
+					JOptionPane.showMessageDialog(new JFrame(),"Please select group.","Error",JOptionPane.ERROR_MESSAGE); 
+				}
+				else{
+					canvas.UnGroup(canvas.getSelectedObj());
+				}
+				List<Shape> shapesInGroup = canvas.getshapesInGroup();
+				if(shapesInGroup.size() == 0)
+					mntmUngroup.setEnabled(false);
 			}
 		}
 		
