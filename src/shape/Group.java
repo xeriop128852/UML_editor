@@ -6,10 +6,14 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+
+import view.Canvas;
+
 import java.awt.*;
 
 
 public class Group extends Shape {
+	private Canvas canvas ;
 	Point startP = new Point();
 	Point endP = new Point();
 	public List<Shape> shapes = new ArrayList<Shape>();

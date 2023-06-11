@@ -3,7 +3,7 @@ package shape;
 import java.awt.Graphics;
 import java.awt.Point;
 
-public class Line extends Shape{
+public abstract class Line extends Shape{
 	private Shape startObj = null;
 	private Shape endObj = null;
 	
@@ -12,17 +12,7 @@ public class Line extends Shape{
 		endP = end;
 	}
 	
-	@Override
-	public void draw(Graphics g) {
-	}
-
-	public void setConnectedObj(Shape start, Shape end) {
-		startObj = start;
-		endObj = end;
-	}
-	public void currentPoint(Point p) {
-        this.endP = p;
-    }
+	public abstract void draw(Graphics g);
 
 	public Shape getStartObj() {
 		return this.startObj;
@@ -32,6 +22,14 @@ public class Line extends Shape{
 		return this.endObj;
 	}
 	
+	public void setConnectedObj(Shape start, Shape end) {
+		startObj = start;
+		endObj = end;
+	}
+	public void currentPoint(Point p) {
+        this.endP = p;
+    }
+
 	public void move(Shape shape, int offsetX, int offsetY) {
 		if(shape == this.startObj){
 			this.startP.x += offsetX;

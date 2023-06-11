@@ -4,17 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public abstract class BasicObj extends Shape {
 	protected int width, height;
 	private int portNum = 4;
-	protected Point[] ports = new Point[4];
+	protected Point[] ports = new Point[portNum];
 	protected String objectName = "default";
 	protected Font font = new Font(Font.DIALOG, Font.BOLD, 14);
-	private List<Line> lines = new ArrayList<Line>();
 	
 	public BasicObj() {
 		startP = new Point();
@@ -63,6 +60,7 @@ public abstract class BasicObj extends Shape {
 		}
 	}
 	
+	//判斷滑鼠所點的地方有沒有點到物件上
 	public boolean IsInside(Point p){
 		return ((p.getX() > startP.x) && 
 				(p.getX() < startP.x + width) &&
@@ -83,7 +81,4 @@ public abstract class BasicObj extends Shape {
 		}
 	}
 	
-	public void addLine(Line line){
-		this.lines.add(line);
-	}
 }

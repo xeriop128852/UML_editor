@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 import shape.Group;
 import shape.Shape;
 
+@SuppressWarnings("serial")
 public class MenuBar extends JMenuBar {
 	private Canvas canvas;
-	private JMenuBar menubar;
 	JMenu menu;
 	JMenuItem mi, mntmUngroup;
 	
@@ -61,6 +61,7 @@ public class MenuBar extends JMenuBar {
 //					canvas.Group();
 					mntmUngroup.setEnabled(true);
 				}
+				canvas.reset();
 			}
 		}
 		
@@ -75,6 +76,7 @@ public class MenuBar extends JMenuBar {
 				List<Shape> shapesInGroup = canvas.getshapesInGroup();
 				if(shapesInGroup.size() == 0)
 					mntmUngroup.setEnabled(false);
+				canvas.reset();
 			}
 		}
 		
@@ -83,6 +85,7 @@ public class MenuBar extends JMenuBar {
 				String inputValue = JOptionPane.showInputDialog(new JFrame(), "Please input object name", "Change Object Name", 
 						JOptionPane.OK_CANCEL_OPTION); 
 				canvas.changeObjName(inputValue);
+				canvas.reset();
 			}
 		}
 }

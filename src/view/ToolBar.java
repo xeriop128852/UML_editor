@@ -1,24 +1,20 @@
 package view;
 
 import javax.swing.JToolBar;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 
 import mode.Mode;
 import mode.createLineMode;
 import mode.createObjMode;
 import mode.selectMode;
 
+@SuppressWarnings("serial")
 public class ToolBar extends JToolBar{
 
 	private Canvas canvas;
@@ -42,6 +38,7 @@ public class ToolBar extends JToolBar{
 		
 	}
 
+	
 	private class Button extends JButton {
 		protected Mode mode;
 		

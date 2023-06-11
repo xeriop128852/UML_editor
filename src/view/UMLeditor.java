@@ -1,13 +1,12 @@
 package view;
 
-import java.awt.GraphicsConfiguration;
+
 import java.awt.HeadlessException;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Point;
 
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class UMLeditor extends JFrame {
 	private Canvas canvas;
 	private MenuBar menubar;

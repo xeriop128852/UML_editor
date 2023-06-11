@@ -17,7 +17,6 @@ import shape.Group;
 
 public class Canvas extends JPanel {
 	private static Canvas instance = null;
-	
 	private EventListener listener = null;
 	protected Mode currentMode = null;
 	
@@ -118,8 +117,7 @@ public class Canvas extends JPanel {
 		group = new Group(shapeList);
 		shapes.add(group);
 		for (int i = 0; i < shapeList.size(); i++) {
-			shapeList.get(i).setGroup(true);
-			//group.addShape(shapeList.get(i));
+//			shapeList.get(i).setGroup(true);
 			this.shapes.remove(shapeList.get(i));
 			
 		}
@@ -128,7 +126,7 @@ public class Canvas extends JPanel {
 	public void UnGroup(Shape shape) {
 		List<Shape> shapelist = ((Group) shape).getShapes();
 		for (int i = 0; i < shapelist.size(); i++) {
-			shapelist.get(i).setGroup(false);
+//			shapelist.get(i).setGroup(false);
 			this.shapes.add(shapelist.get(i));
 		}
 		this.shapes.remove(shape);
@@ -143,8 +141,9 @@ public class Canvas extends JPanel {
 		}
 		for (int i = shapes.size() - 1; i >= 0; i--) {
 			shapes.get(i).setSelected(false);
+//			shapes.get(i).setGroup(false);
 		}
-		//SelectedArea.setBounds(0, 0, 0, 0); 
+		SelectedArea.setBounds(0, 0, 0, 0); 
 	}
 
 
@@ -184,11 +183,11 @@ public class Canvas extends JPanel {
 //				group.draw(g);
 //			}
 			
-			shape.setGroup(false);
+//			shape.setGroup(false);
 			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
 				shape.drawPorts(g);
 				shape.setSelected(true);
-				shape.setGroup(true);
+//				shape.setGroup(true);
 			}
 			
 			

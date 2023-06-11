@@ -17,11 +17,12 @@ public class createLineMode extends Mode {
 	private Point clickPoint = null;
 	private List<Shape> shapes = new ArrayList<Shape>();;
 	private Shape shape = null;
-	private Shape startObj = null;
-	private Shape endObj = null;
+	private BasicObj startObj = null;
+	private BasicObj endObj = null;
 	private Point startP = null;
 	private Point endP = null;
 	private Line line = null;
+	private Factory factory = new ShapeFactory();
 	
 	public createLineMode(String type) {
 		lineType = type;
@@ -45,8 +46,7 @@ public class createLineMode extends Mode {
 	@Override
 	public void mouseDragged(MouseEvent e) {
 		if(startP != null) {
-//			line = new Line(startP, e.getPoint());
-			line = createLine(lineType, startP, e.getPoint());
+			line = factory.createLine(lineType, startP, e.getPoint());
 			this.canvas.setLine(line);
 			canvas.repaint();
 		}
@@ -74,22 +74,23 @@ public class createLineMode extends Mode {
 			}
 		}
 		this.clickPoint = null;
+		this.startP = null;
 		this.canvas.reset();
 		this.canvas.repaint();
 
 	}
 
-	public Line createLine(String type, Point startP, Point endP) {
-		if(type.equals("association")){
-			return new AssociationLine(startP, endP);
-		}
-		else if(type.equals("generalization")){
-			return new GeneralizationLine(startP, endP);
-		}
-		else if(type.equals("composition")) {
-			return new CompositionLine(startP, endP);
-		}
-		return null;
-	}
+//	public Line createLine(String type, Point startP, Point endP) {
+//		if(type.equals("association")){
+//			return new AssociationLine(startP, endP);
+//		}
+//		else if(type.equals("generalization")){
+//			return new GeneralizationLine(startP, endP);
+//		}
+//		else if(type.equals("composition")) {
+//			return new CompositionLine(startP, endP);
+//		}
+//		return null;
+//	}
 
 }
