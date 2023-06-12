@@ -8,14 +8,12 @@ import java.util.List;
 import shape.Shape;
 import shape.BasicObj;
 import shape.Line;
-import shape.AssociationLine;
-import shape.CompositionLine;
-import shape.GeneralizationLine;
 
 public class createLineMode extends Mode {
 	private String lineType;
 	private Point clickPoint = null;
-	private List<Shape> shapes = new ArrayList<Shape>();;
+	private List<Shape> shapes = new ArrayList<Shape>();
+	
 	private Shape shape = null;
 	private BasicObj startObj = null;
 	private BasicObj endObj = null;
@@ -58,39 +56,22 @@ public class createLineMode extends Mode {
 	public void mouseReleased(MouseEvent e) {
 		for (int i = this.shapes.size()-1; i >= 0; i--)
 		{	
-			Shape shape = shapes.get(i);
-			if(shape == this.startObj){
-				continue;
-			}
-			if(shape.IsInside(e.getPoint())){
+			shape = shapes.get(i);
+			if(shape != startObj && shape.IsInside(e.getPoint())){
 				this.endObj = (BasicObj) shape;
 				this.endP = this.endObj.getPort(e.getPoint());
+				
 				this.canvas.getLine().currentPoint(endP);
 				this.canvas.getLine().setConnectedObj(this.startObj, this.endObj);
 				this.canvas.addShape(this.canvas.getLine());
-				this.startObj.addLine(this.canvas.getLine());
-				this.endObj.addLine(this.canvas.getLine());
 				break;
 			}
 		}
 		this.clickPoint = null;
 		this.startP = null;
+		this.endP = null;
 		this.canvas.reset();
 		this.canvas.repaint();
 
 	}
-
-//	public Line createLine(String type, Point startP, Point endP) {
-//		if(type.equals("association")){
-//			return new AssociationLine(startP, endP);
-//		}
-//		else if(type.equals("generalization")){
-//			return new GeneralizationLine(startP, endP);
-//		}
-//		else if(type.equals("composition")) {
-//			return new CompositionLine(startP, endP);
-//		}
-//		return null;
-//	}
-
 }

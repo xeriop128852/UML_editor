@@ -14,12 +14,13 @@ public abstract class BasicObj extends Shape {
 	protected Font font = new Font(Font.DIALOG, Font.BOLD, 14);
 	
 	public BasicObj() {
+		width = height = 0;
 		startP = new Point();
 		ports = new Point[portNum];
 		for(int i = 0; i < portNum ; i++)
 			ports[i] = new Point();
 		
-		setEndLocation(startP, width, height);
+		endP = setEndLocation(startP, width, height);
 	}
 
 	public abstract void draw(Graphics g);

@@ -32,7 +32,6 @@ public abstract class Shape {
 	}
 	
 	//BasicObj
-	public void addLine(Line line) {}
 	public void drawPorts(Graphics g) {}
 	public boolean IsInside(Point p) {return false;}
 	

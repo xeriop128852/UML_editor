@@ -99,28 +99,14 @@ public class Canvas extends JPanel {
 		}
 	}
 	
-//	public void Group() {
-//		Group group = new Group();
-//		for (int i = 0; i < shapes.size(); i++) {
-//			Shape shape = shapes.get(i);
-//			if (shape.group_selected) {
-//				group.addShapes(shape);
-//				shapes.remove(i);
-//				i--;
-//			}
-//		}
-//		group.setBounds();
-//		shapes.add(group);
-//	}
-	
 	public void Group(List<Shape> shapeList) {
 		group = new Group(shapeList);
-		shapes.add(group);
 		for (int i = 0; i < shapeList.size(); i++) {
-//			shapeList.get(i).setGroup(true);
 			this.shapes.remove(shapeList.get(i));
 			
 		}
+		shapes.add(group);
+		repaint();
 	}
 	
 	public void UnGroup(Shape shape) {
@@ -141,7 +127,6 @@ public class Canvas extends JPanel {
 		}
 		for (int i = shapes.size() - 1; i >= 0; i--) {
 			shapes.get(i).setSelected(false);
-//			shapes.get(i).setGroup(false);
 		}
 		SelectedArea.setBounds(0, 0, 0, 0); 
 	}
@@ -183,21 +168,15 @@ public class Canvas extends JPanel {
 //				group.draw(g);
 //			}
 			
-//			shape.setGroup(false);
 			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
 				shape.drawPorts(g);
 				shape.setSelected(true);
-//				shape.setGroup(true);
 			}
-			
-			
 		}
 		
 		if (line != null) {
 			this.line.draw(g);
 		}
-
-
 		
 		if (!SelectedArea.isEmpty()) {
 			int alpha = 15;

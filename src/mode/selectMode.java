@@ -18,9 +18,7 @@ public class selectMode extends Mode {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
 		canvas.reset();
-		shape = null;
 		this.clickPoint = e.getPoint();
 		this.shapes = canvas.getShapeList();
 		
@@ -67,13 +65,6 @@ public class selectMode extends Mode {
 		}
 		else {
 			canvas.SelectedArea.setSize(Math.abs(e.getX() - clickPoint.x), Math.abs(e.getY() - clickPoint.y));
-		}
-		
-		if(this.canvas.getshapesInGroup().size() == 1){
-			Shape tmp = this.canvas.getshapesInGroup().get(0);
-			if(tmp instanceof Line != true){
-				this.canvas.setSelectedObj(tmp);
-			}
 		}
 		
 		this.canvas.repaint();

@@ -2,9 +2,7 @@ package mode;
 
 import java.awt.event.MouseEvent;
 
-import shape.UseCase;
 import shape.BasicObj;
-import shape.Class;
 
 public class createObjMode extends Mode {
 	private String objType = null;

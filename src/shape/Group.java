@@ -12,48 +12,32 @@ import view.Canvas;
 import java.awt.*;
 
 
-public class Group extends Shape {
-	private Canvas canvas ;
-	Point startP = new Point();
-	Point endP = new Point();
+public class Group extends BasicObj {
 	public List<Shape> shapes = new ArrayList<Shape>();
 	public List<Shape> shapesInGroup = new ArrayList<>();
 	
 	public Group(List<Shape> shapeList) {
-		startP.x = shapeList.get(0).startP.x;
-		endP.x = shapeList.get(0).endP.x;
-		startP.y = shapeList.get(0).startP.y;
-		endP.y = shapeList.get(0).endP.y;
-		
+//		this.startP = shapeList.get(0).startP;
+//		this.endP = shapeList.get(0).endP;
+		this.startP.x = Integer.MAX_VALUE;
+		this.startP.y = Integer.MAX_VALUE;
+		this.endP.x = Integer.MIN_VALUE;
+		this.endP.y = Integer.MIN_VALUE;
 		
 		for(int i = 0; i < shapeList.size(); i++) {
 			Shape shape = shapeList.get(i);
-			shapeList.get(i).setSelected(false);
-			//shapesInGroup.add(shape);
-			addShape(shape);
+			shape.setSelected(false);
+			shapesInGroup.add(shape);
 			
-			startP.x = Math.min(startP.x, shape.startP.x);
-			startP.y = Math.min(startP.y, shape.startP.y);
-			endP.x = Math.max(endP.x, shape.endP.x);
-			endP.y = Math.max(endP.y, shape.endP.y);
+			this.startP.x = Math.min(this.startP.x, shape.startP.x);
+			this.startP.y = Math.min(this.startP.y, shape.startP.y);
+			this.endP.x = Math.max(this.endP.x, shape.endP.x);
+			this.endP.y = Math.max(this.endP.y, shape.endP.y);
 		}
-	}
-
-	public void setSelected(boolean b) {
-		if(b == true) {
-			this.isSelected = true;
-			for(int i = 0; i < shapesInGroup.size(); i++) {
-				Shape shape = shapesInGroup.get(i);
-				shapesInGroup.get(i).setSelected(true);
-			}
-		}
-		else {
-			this.isSelected = false;
-			for(int i = 0; i < shapesInGroup.size(); i++) {
-				Shape shape = shapesInGroup.get(i);
-				shapesInGroup.get(i).setSelected(false);
-			}
-		}
+		
+		width = endP.x - startP.x;
+		height = endP.y - startP.y;
+		generatePorts();
 	}
 	
 	public void addShape(Shape shape) {
@@ -72,48 +56,55 @@ public class Group extends Shape {
 		shapesInGroup = null;
 	}
 	
-	public void move(int offsetX, int offsetY) {
-		this.startP.x += offsetX;
-		this.startP.y += offsetY;
-		this.endP = setEndLocation(startP, endP.x-startP.x+offsetX, endP.y-startP.y+offsetY);
-
-		for(int i = 0; i< this.shapesInGroup.size(); i++){
-			this.shapesInGroup.get(i).move(offsetX, offsetY);
+	public void setSelected(boolean b) {
+		if(b == true) {
+			this.isSelected = true;
+			for(int i = 0; i < shapesInGroup.size(); i++) {
+				Shape shape = shapesInGroup.get(i);
+				shapesInGroup.get(i).setSelected(true);
+			}
+		}
+		else {
+			this.isSelected = false;
+			for(int i = 0; i < shapesInGroup.size(); i++) {
+				Shape shape = shapesInGroup.get(i);
+				shapesInGroup.get(i).setSelected(false);
+			}
 		}
 	}
 	
-	public boolean IsInside(Point p){
-//		for(int i = 0; i< this.shapesInGroup.size(); i++){
-//			if(this.shapesInGroup.get(i).IsInside(p))
-//				return true;
+	@Override
+	public void move(int offsetX, int offsetY) {
+		for(int i = 0; i< this.shapesInGroup.size(); i++){
+			this.shapesInGroup.get(i).move(offsetX, offsetY);
+		}
+		this.startP.x += offsetX;
+		this.startP.y += offsetY;
+		this.endP = setEndLocation(endP, offsetX, offsetY);
+		resetPorts(offsetX, offsetY);
+	}
+	
+//	@Override
+//	public boolean IsInside(Point p){
+//		Rectangle r = new Rectangle();
+//		r.setBounds(startP.x, startP.y, width, height); 
+//		if (r.contains(p)) {
+//			return true;
 //		}
 //		return false;
-		Rectangle r = new Rectangle();
-		r.setBounds(startP.x, startP.y, endP.x-startP.x, endP.y-startP.y); 
-		if (r.contains(p)) {
-			return true;
-		}
-		return false;
-	}
+//	}
 	
 	
 	@Override
 	public void draw(Graphics g) {
 		for(int i = 0; i< this.shapesInGroup.size(); i++){
 			this.shapesInGroup.get(i).draw(g);
-			if(this.isSelected == true) {
-				shapesInGroup.get(i).drawPorts(g);
-			}
 		}
 		int alpha = 15;
 		g.setColor(new Color(24, 12, 132, alpha));
-		g.fillRect(startP.x, startP.y, endP.x - startP.x, endP.y - startP.y);
+		g.fillRect(this.startP.x, this.startP.y, width, height);
 		g.setColor(new Color(24, 12, 132));
-		g.drawRect(startP.x, startP.y, endP.x - startP.x, endP.y - startP.y);
+		g.drawRect(this.startP.x, this.startP.y, width, height);
 	}
 	
-	
-	public void show(Graphics g) {
-		
-	}
 }
