@@ -58,7 +58,6 @@ public class MenuBar extends JMenuBar {
 				}
 				else{
 					canvas.Group(shapesInGroup);
-//					canvas.Group();
 					mntmUngroup.setEnabled(true);
 				}
 				canvas.reset();
@@ -73,9 +72,6 @@ public class MenuBar extends JMenuBar {
 				else{
 					canvas.UnGroup(canvas.getSelectedObj());
 				}
-				List<Shape> shapesInGroup = canvas.getshapesInGroup();
-				if(shapesInGroup.size() == 0)
-					mntmUngroup.setEnabled(false);
 				canvas.reset();
 			}
 		}

@@ -33,6 +33,12 @@ public class ToolBar extends JToolBar{
 		
 		for(int i = 0; i < btn_num; i++) {
 			Button button = new Button(buttonName[i], mode[i]);
+			//defult : selectMode
+			if(i == 0) {
+				this.button = button;
+				button.setBackground(Color.black);
+				canvas.setCurrentMode(mode[i]);
+			}
 			add(button);
 		}
 		
@@ -62,7 +68,6 @@ public class ToolBar extends JToolBar{
 				button = (Button) e.getSource();
 				button.setBackground(Color.black);
 				canvas.setCurrentMode(mode);
-				canvas.resetCurrentMode();
 				canvas.reset();
 				canvas.repaint();
 			}

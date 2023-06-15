@@ -2,14 +2,8 @@ package shape;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
-import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
-
-import view.Canvas;
-
-import java.awt.*;
 
 
 public class Group extends BasicObj {
@@ -17,8 +11,6 @@ public class Group extends BasicObj {
 	public List<Shape> shapesInGroup = new ArrayList<>();
 	
 	public Group(List<Shape> shapeList) {
-//		this.startP = shapeList.get(0).startP;
-//		this.endP = shapeList.get(0).endP;
 		this.startP.x = Integer.MAX_VALUE;
 		this.startP.y = Integer.MAX_VALUE;
 		this.endP.x = Integer.MIN_VALUE;
@@ -60,14 +52,12 @@ public class Group extends BasicObj {
 		if(b == true) {
 			this.isSelected = true;
 			for(int i = 0; i < shapesInGroup.size(); i++) {
-				Shape shape = shapesInGroup.get(i);
 				shapesInGroup.get(i).setSelected(true);
 			}
 		}
 		else {
 			this.isSelected = false;
 			for(int i = 0; i < shapesInGroup.size(); i++) {
-				Shape shape = shapesInGroup.get(i);
 				shapesInGroup.get(i).setSelected(false);
 			}
 		}

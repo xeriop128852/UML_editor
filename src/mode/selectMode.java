@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import shape.Line;
 import shape.Shape;
 
 public class selectMode extends Mode {

@@ -15,6 +15,7 @@ import shape.Line;
 import mode.*;
 import shape.Group;
 
+@SuppressWarnings("serial")
 public class Canvas extends JPanel {
 	private static Canvas instance = null;
 	private EventListener listener = null;
@@ -46,13 +47,9 @@ public class Canvas extends JPanel {
 	}
 	
 	public void setCurrentMode(Mode mode) {
-		this.currentMode = mode;
-	}
-	
-	public void resetCurrentMode() {
 		removeMouseListener((MouseListener) listener);
 		removeMouseMotionListener((MouseMotionListener) listener);
-		this.listener  = this.currentMode;
+		this.listener  = mode;
 		addMouseListener((MouseListener) listener);
 		addMouseMotionListener((MouseMotionListener) listener);
 	}
@@ -116,7 +113,7 @@ public class Canvas extends JPanel {
 			this.shapes.add(shapelist.get(i));
 		}
 		this.shapes.remove(shape);
-		
+		repaint();
 	}
 	
 	public void reset() {
@@ -160,13 +157,6 @@ public class Canvas extends JPanel {
 			}else if(selectedObj != null) {
 				selectedObj.drawPorts(g);
 			}
-			
-			
-//			
-//			if (shape.IsSelected() && (shape instanceof Group)) {
-//				Group group = (Group) shape;
-//				group.draw(g);
-//			}
 			
 			if (!SelectedArea.isEmpty()  && checkSelectedArea(shape)) {
 				shape.drawPorts(g);
